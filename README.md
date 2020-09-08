@@ -14,6 +14,7 @@
 
 1. [shippy](https://github.com/EwanValentine/shippy)
 2. [chitchat](https://github.com/nonfu/chitchat)
+3. [goddd](https://github.com/marcusolsson/goddd)
 
 ## 使用的知识和技术
 
@@ -42,3 +43,27 @@
 
 - https://microservices.io/
 - [《微服务架构设计模式》](https://book.douban.com/subject/33425123/)
+
+## shipping
+
+项目原始链接，[shipping](https://github.com/go-kit/kit/tree/master/examples/shipping)。
+
+此示例展示了一个更贴近真实世界的应用程序，它由多个服务组成。
+
+### 描述
+
+该实现基于Eric Evans的《[领域驱动设计](http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)》一书中的集装箱运输领域，该书最初是用Java实现的，但此后已移植到Go。本示例是一个简化版本，以演示Go kit的用法。原始的[Go应用程序](https://github.com/marcusolsson/goddd)是单独维护的，并带有AngularJS应用程序和模拟路由服务。
+
+### 项目组织
+
+该应用程序包含三个应用程序服务，即预订，处理和追踪。如前面的示例所示，每一个都是单独的Go kit服务。
+
+- 预订服务：货运公司用来预订和运送货物。
+- 处理服务：员工在全球范围内进行收货，装货注册。
+- 追踪服务：客户用来追踪路线上的货物。
+
+也有一些通用领域服务，其中包含一些复杂的业务逻辑。它们提供每个应用程序服务使用的领域对象和服务，以为用户提供有趣的用例。
+
+`inmem`是通用领域服务中存储库的内存实现。
+
+`routing`提供了一个领域服务，该领域服务用于向外部应用程序查询可能的路由。
