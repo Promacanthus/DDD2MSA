@@ -35,8 +35,9 @@ func (t HandingEventType) String() string {
 		return "Claim"
 	case Customs:
 		return "Customs"
+	default:
+		return ""
 	}
-	return ""
 }
 
 // HandingActivity 表示如何以及在何处处理货物，
@@ -98,5 +99,10 @@ func (f *HandingEventFactory) CreateHandingEvent(registered time.Time, completed
 
 	return HandingEvent{
 		TrackingID: id,
-		Activity:   HandingActivity{Type: eventType, Location: unLocode, VoyageNumber: voyageNumber}}, nil
+		Activity: HandingActivity{
+			Type:         eventType,
+			Location:     unLocode,
+			VoyageNumber: voyageNumber,
+		},
+	}, nil
 }

@@ -28,6 +28,7 @@ func NewLeg(voyageNumber voyage.Number, loadLocation, unloadLocation location.UN
 }
 
 // Itinerary 行程中规定了将货物从始发地运输到目的地所经过的路线
+// 表示的是原计划行程中的路线
 type Itinerary struct {
 	Legs []Leg `json:"legs"`
 }
