@@ -164,6 +164,7 @@ func calculateCurrentVoyage(status TransportStatus, event HandingEvent) voyage.N
 	}
 	return voyage.Number("")
 }
+
 func calculateETA(d Delivery) time.Time {
 	if !d.IsOnTrack() {
 		return time.Time{}
