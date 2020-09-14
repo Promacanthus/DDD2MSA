@@ -4,10 +4,9 @@ import (
 	"errors"
 	"time"
 
-	"github.com/go-kit/kit/examples/shipping/routing"
-
 	"github.com/Promacanthus/vigour/cargo"
 	"github.com/Promacanthus/vigour/location"
+	"github.com/Promacanthus/vigour/routing"
 )
 
 // ErrInvalidArgument 当一个或多个参数无效时返回
@@ -19,7 +18,7 @@ type Service interface {
 	// LoadCargo  返回货物的可读模型
 	LoadCargo(id cargo.TrackingID) (Cargo, error)
 	// RequestPossibleRoutesForCargo 提供描述该货物可能路线的路线清单
-	RequestPossibleRoutesForCargo(id cargo.TrackingID, itinerary cargo.Itinerary) error
+	RequestPossibleRoutesForCargo(id cargo.TrackingID, itinerary cargo.Itinerary) []cargo.Itinerary
 	// AssignCargoToRoute 将货物分配到路线
 	AssignCargoToRoute(id cargo.TrackingID, itinerary cargo.Itinerary) error
 	// ChangeDestination 修改货物的目的地
@@ -31,10 +30,9 @@ type Service interface {
 }
 
 type service struct {
-	cargos        cargo.Repository
-	locations     location.Repository
-	handlingEvent cargo.HandingEventRepository
-	// TODO
+	cargos         cargo.Repository
+	locations      location.Repository
+	handlingEvent  cargo.HandingEventRepository
 	routingService routing.Service
 }
 
@@ -67,14 +65,14 @@ func (s *service) LoadCargo(id cargo.TrackingID) (Cargo, error) {
 	return assemble(c, s.handlingEvent), nil
 }
 
-func (s *service) RequestPossibleRoutesForCargo(id cargo.TrackingID, itinerary cargo.Itinerary) error {
+func (s *service) RequestPossibleRoutesForCargo(id cargo.TrackingID, itinerary cargo.Itinerary) []cargo.Itinerary {
 	if id == "" {
 		return nil
 	}
 
 	c, err := s.cargos.Find(id)
 	if err != nil {
-		return err
+		return []cargo.Itinerary{}
 	}
 
 	// TODO
